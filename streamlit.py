@@ -24,11 +24,6 @@ list_Dif = ['RX','Scaled']
 st.set_page_config(layout="wide")
 
 st.title('Crossfit83 Le Beausset')
-st.markdown("[![Click me]()](https://streamlit.io)")
-st.markdown(
-    '<img src="http://www.crossfit83lebeausset.com/s/misc/logo.png?t=1688994055" height="333" style="border: 5px solid black">',
-    unsafe_allow_html=True,
-)
 st.write('Application permettant de tracer les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
 st.divider()
 
@@ -52,7 +47,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
 
 with st.container():
     st.info("Si vous souhaitez voir votre profil, merci de selectionner votre nom dans la liste déroulante ci-dessous :point_down:")
-    profile_ = st.selectbox(options = list_Name)
+    profile_ = st.selectbox(list_Name)
     if profile_ in list_Name :
         st.dataframe(df.loc[df['Nom'] == profile_],height=300)
 
