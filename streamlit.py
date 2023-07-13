@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 df = pd.read_csv('./database.csv')
 list_Type = ['EMOM','AMRAP','RM1']
 list_Exercice = [['CHELSEA'],['CINDY'],['POWER CLEAN']]
-list_Name = list(df['Nom'].unique())+list("Nouveau profil")
+list_Name = list(df['Nom'].unique()).append("Nouveau profil")
 list_Unité = ["kg", "min", "tours"]
 
 ### Configuration de la page
@@ -22,9 +22,9 @@ st.divider()
 with st.sidebar.expander("Ajouter une ligne de benchmark."):
   name_ = st.multiselect('Choisir votre nom dans la liste déroulante ou Nouveau profil pour débuter.', list_Name)
   type_ = st.multiselect('Choisir dans la liste déroulante le type de WOD', list_Type)
-  if type == 'EMOM' : ex_ = st.multiselect('Choisir dans la liste déroulante l\'exercice', list_Exercice[0])
-  elif type == 'AMRAP' : ex_ = st.multiselect('Choisir dans la liste déroulante l\'exercice', list_Exercice[1])
-  elif type == 'RM1' : ex_ = st.multiselect('Choisir dans la liste déroulante l\'exercice', list_Exercice[2])
+  if type_ == 'EMOM' : ex_ = st.multiselect('Choisir dans la liste déroulante l\'exercice', list_Exercice[0])
+  if type_ == 'AMRAP' : ex_ = st.multiselect('Choisir dans la liste déroulante l\'exercice', list_Exercice[1])
+  if type_ == 'RM1' : ex_ = st.multiselect('Choisir dans la liste déroulante l\'exercice', list_Exercice[2])
   value_ = st.number_input('Merci de renseigner la valeur.')
   unite_ = st.radio('Merci de sélectionner une unité.', list_Unité)
   date_ = st.date_input('Merci de sélectionner la date du WOD', datetime.date.today())
