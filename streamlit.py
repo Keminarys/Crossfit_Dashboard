@@ -12,9 +12,9 @@ import plotly.graph_objects as go
 #     return pd.read_csv(csv_url)
 
 def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
-    with open('/app/Crossfit_Dashboard/temp.csv', 'a+') as f:    #Append & read mode
+    with open('temp.csv', 'a+') as f:    #Append & read mode
         f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
-        f.to_csv('/app/Crossfit_Dashboard/temp.csv', index=False)
+        f.to_csv('temp.csv', index=False)
 
 ### Variables fixes 
 #df = load_data(st.secrets["public_gsheets_url"])
@@ -50,7 +50,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
         
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    df=pd.read_csv('/app/Crossfit_Dashboard/temp.csv')
+    df=pd.read_csv('temp.csv')
     list_Type = list(df['Type'].unique())
     list_Exercice = list(df['Exercice'].unique())
     list_Name = list(df['Nom'].unique())
