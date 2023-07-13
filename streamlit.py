@@ -17,7 +17,7 @@ list_Unité = ["kg", "min", "tours"]
 st.set_page_config(layout="wide")
 
 st.title('Crossfit83 Le Beausset')
-st.write('Application permettant de tracer les différents WOD de référence et ainsi voir l'\évolution de chaque athlète.')
+st.write('Application permettant de tracer les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
 st.divider()
 with st.sidebar.expander("Ajouter une ligne de benchmark."):
   name_ = st.multiselect('Choisir votre nom dans la liste déroulante ou Nouveau profil pour débuter.', list_Name)
