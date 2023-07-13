@@ -41,8 +41,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     if submitted:
         st.write("Benchmark ajouté à votre profil !")
         form_callback(name_, type_, ex_, date_, value_, unite_, dif_)
-        temp = pd.read_csv("temp.csv")
-        temp.to_csv('database.csv')
+        
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
     df = pd.read_csv('database.csv')
