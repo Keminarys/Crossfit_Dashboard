@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 #     return pd.read_csv(csv_url)
 
 def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
-    with open('/app/Crossfit_Dashboard/temp.csv', 'rw') as f:    #Append & read mode
+    with open('/app/Crossfit_Dashboard/temp.csv', 'a+') as f:    #Append & read mode
         f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
         f.to_csv('/app/Crossfit_Dashboard/temp.csv', index=False)
 
