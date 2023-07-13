@@ -9,7 +9,8 @@ import plotly.graph_objects as go
 df = pd.read_csv('./database.csv')
 list_Type = ['EMOM','AMRAP','RM1']
 list_Exercice = [['CHELSEA'],['CINDY'],['POWER CLEAN']]
-list_Name = list(df['Nom'].unique()).append("Nouveau profil")
+list_Name = list(df['Nom'].unique())
+list_Name.append("Nouveau profil")
 list_Unité = ["kg", "min", "tours"]
 
 ### Configuration de la page
