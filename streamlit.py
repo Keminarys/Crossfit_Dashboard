@@ -6,7 +6,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 ### Variables fixes 
-df = pd.read_csv('/app/Crossfit_Dashboard/database.csv')
+df = pd.read_csv('./database.csv')
 list_Type = ['EMOM','AMRAP','RM1']
 list_Exercice = [['CHELSEA'],['CINDY'],['POWER CLEAN']]
 list_Name = list(df['Nom'].unique())+list("Nouveau profil")
