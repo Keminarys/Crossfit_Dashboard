@@ -29,41 +29,47 @@ st.write('Application permettant de tracer les différents WOD de référence et
 st.divider()
 
 
-# with st.form(key="my_form",clear_on_submit=True):
+with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     
-#     st.write("Enter Note")
-    
-#     stock_ticker_input = st.text_input('Stock', key='ticker')
-#     note_input = st.text_input('Note', key='note')
-    
-#     submitted = st.form_submit_button("Submit")
-#     if submitted:
-#         st.write("Note", note_input, "stock_ticker", stock_ticker_input)
-#         form_callback(stock_ticker_input,note_input)
-
-# st.info(" #### Show contents of the CSV file :point_down:")
-# st.dataframe(pd.read_csv("notes.csv",names=["Stock","Note"]),height=300)
-
-with st.sidebar.expander("Ajouter une ligne de benchmark."):
-  name_ = st.selectbox('Choisir votre nom dans la liste déroulante ou Nouveau profil pour débuter.', list_Name)
-  if name_ == "Nouveau profil" : 
+    st.write("Ajouter un nouveau benchmark")
     st.divider()
-    new_ = st.text_input("Merci de renseigner votre prénom uniquement.")
-  type_ = st.selectbox('Choisir dans la liste déroulante le type de WOD', list_Type)
-  if type_ == 'EMOM' : 
-    ex_ = st.selectbox('Choisir dans la liste déroulante l\'exercice', list_Exercice[0])
-  elif type_ == 'AMRAP' : 
-    ex_ = st.selectbox('Choisir dans la liste déroulante l\'exercice', list_Exercice[1])
-  elif type_ == 'RM1' : 
-    ex_ = st.selectbox('Choisir dans la liste déroulante l\'exercice', list_Exercice[2])
-  value_ = st.number_input('Merci de renseigner la valeur.')
-  unite_ = st.radio('Merci de sélectionner une unité.', list_Unité)
-  date_ = st.date_input('Merci de sélectionner la date du WOD', datetime.date.today())
+    st.write('Pour des soucis de RGPD, merci de renseigner seulement votre les 3 premières lettre de votre prénom et la première lettre de votre nom de famille')
+    name_ = st.text_input('Stock', key='Nom')
+    type_ = st.text_input('Stock', key='Nom')
+    ex_ = st.text_input('Stock', key='Nom')
+    date_ = st.date_input('Merci de sélectionner la date du WOD', datetime.date.today())
+    value_ = st.number_input('Merci de renseigner la valeur.')
+    unite_ = st.radio('Merci de sélectionner une unité.', list_Unité)
+    dif_ = st.radio('Merci de sélectionner une difficulté.', list_Dif)
+    
+    submitted = st.form_submit_button("Ajouter à mon profil")
+    if submitted:
+        st.write("Note", note_input, "stock_ticker", stock_ticker_input)
+        form_callback(stock_ticker_input,note_input)
 
-if name_ != "Nouveau profil" :
-  row_to_add = [name_, type_, ex_, date_, value_, unite_]
-  df.loc[len(df)] = row_to_add
-else : 
-  row_to_add = [new_, type_, ex_, date_, value_, unite_]
-  df.loc[len(df)] = row_to_add
+st.info(" #### Show contents of the CSV file :point_down:")
+st.dataframe(pd.read_csv("database.csv",names=["Nom","Type","Exercice","Date","Valeur","Unité","Difficulté"]),height=300)
+
+# with st.sidebar.expander("Ajouter une ligne de benchmark."):
+#   name_ = st.selectbox('Choisir votre nom dans la liste déroulante ou Nouveau profil pour débuter.', list_Name)
+#   if name_ == "Nouveau profil" : 
+#     st.divider()
+#     new_ = st.text_input("Merci de renseigner votre prénom uniquement.")
+#   type_ = st.selectbox('Choisir dans la liste déroulante le type de WOD', list_Type)
+#   if type_ == 'EMOM' : 
+#     ex_ = st.selectbox('Choisir dans la liste déroulante l\'exercice', list_Exercice[0])
+#   elif type_ == 'AMRAP' : 
+#     ex_ = st.selectbox('Choisir dans la liste déroulante l\'exercice', list_Exercice[1])
+#   elif type_ == 'RM1' : 
+#     ex_ = st.selectbox('Choisir dans la liste déroulante l\'exercice', list_Exercice[2])
+#   value_ = st.number_input('Merci de renseigner la valeur.')
+#   unite_ = st.radio('Merci de sélectionner une unité.', list_Unité)
+#   date_ = st.date_input('Merci de sélectionner la date du WOD', datetime.date.today())
+
+# if name_ != "Nouveau profil" :
+#   row_to_add = [name_, type_, ex_, date_, value_, unite_]
+#   df.loc[len(df)] = row_to_add
+# else : 
+#   row_to_add = [new_, type_, ex_, date_, value_, unite_]
+#   df.loc[len(df)] = row_to_add
 
