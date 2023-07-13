@@ -39,7 +39,6 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     value_ = st.number_input('Merci de renseigner la valeur.')
     unite_ = st.radio('Merci de sélectionner une unité.', list_Unité)
     dif_ = st.radio('Merci de sélectionner une difficulté.', list_Dif)
-    
     submitted = st.form_submit_button("Ajouter à mon profil")
     if submitted:
         st.write("Benchmark ajouté à votre profil !")
@@ -47,7 +46,8 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
 
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
-    if profile_ in list_Name :
-        st.dataframe(df.loc[df['Nom'] == profile_],height=300)
+    st.dataframe(df,height=300)
+    # profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
+    # if profile_ in list_Name :
+    #     st.dataframe(df.loc[df['Nom'] == profile_],height=300)
 
