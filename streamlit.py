@@ -43,11 +43,11 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     
     submitted = st.form_submit_button("Ajouter à mon profil")
     if submitted:
-        st.write("Note", note_input, "stock_ticker", stock_ticker_input)
-        form_callback(stock_ticker_input,note_input)
-
+        st.write("Nom",name_,"Type",type_,"Exercice",ex_,"Date",date_,"Valeur",value_,"Unité",unite_,"Difficulté",dif_)
+        form_callback(name_, type_, ex_, date_, value_, unite_, dif_)
+      
 st.info(" #### Show contents of the CSV file :point_down:")
-st.dataframe(pd.read_csv("database.csv",names=["Nom","Type","Exercice","Date","Valeur","Unité","Difficulté"]),height=300)
+st.dataframe(pd.read_csv("database.csv"),height=300)
 
 # with st.sidebar.expander("Ajouter une ligne de benchmark."):
 #   name_ = st.selectbox('Choisir votre nom dans la liste déroulante ou Nouveau profil pour débuter.', list_Name)
