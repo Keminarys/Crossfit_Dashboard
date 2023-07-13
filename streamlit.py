@@ -13,10 +13,9 @@ def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):
 
 ### Variables fixes 
 df = pd.read_csv('./database.csv')
-list_Type = ['EMOM','AMRAP','RM1']
-list_Exercice = [['CHELSEA'],['CINDY'],['POWER CLEAN']]
+list_Type = list(df['Type'].unique())
+list_Exercice = list(df['Exercice'].unique())
 list_Name = list(df['Nom'].unique())
-list_Name.append("Nouveau profil")
 list_Unité = ["kg", "min", "tours"]
 list_Dif = ['RX','Scaled']
 
@@ -25,6 +24,7 @@ list_Dif = ['RX','Scaled']
 st.set_page_config(layout="wide")
 
 st.title('Crossfit83 Le Beausset')
+st.image("http://www.crossfit83lebeausset.com/s/misc/logo.png?t=1688994055",width=400)
 st.write('Application permettant de tracer les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
 st.divider()
 
@@ -43,32 +43,12 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     
     submitted = st.form_submit_button("Ajouter à mon profil")
     if submitted:
-        st.write("Nom",name_,"Type",type_,"Exercice",ex_,"Date",date_,"Valeur",value_,"Unité",unite_,"Difficulté",dif_)
+        st.write("Benchmark ajouté à votre profil !")
         form_callback(name_, type_, ex_, date_, value_, unite_, dif_)
-      
-st.info(" #### Show contents of the CSV file :point_down:")
-st.dataframe(pd.read_csv("database.csv"),height=300)
 
-# with st.sidebar.expander("Ajouter une ligne de benchmark."):
-#   name_ = st.selectbox('Choisir votre nom dans la liste déroulante ou Nouveau profil pour débuter.', list_Name)
-#   if name_ == "Nouveau profil" : 
-#     st.divider()
-#     new_ = st.text_input("Merci de renseigner votre prénom uniquement.")
-#   type_ = st.selectbox('Choisir dans la liste déroulante le type de WOD', list_Type)
-#   if type_ == 'EMOM' : 
-#     ex_ = st.selectbox('Choisir dans la liste déroulante l\'exercice', list_Exercice[0])
-#   elif type_ == 'AMRAP' : 
-#     ex_ = st.selectbox('Choisir dans la liste déroulante l\'exercice', list_Exercice[1])
-#   elif type_ == 'RM1' : 
-#     ex_ = st.selectbox('Choisir dans la liste déroulante l\'exercice', list_Exercice[2])
-#   value_ = st.number_input('Merci de renseigner la valeur.')
-#   unite_ = st.radio('Merci de sélectionner une unité.', list_Unité)
-#   date_ = st.date_input('Merci de sélectionner la date du WOD', datetime.date.today())
-
-# if name_ != "Nouveau profil" :
-#   row_to_add = [name_, type_, ex_, date_, value_, unite_]
-#   df.loc[len(df)] = row_to_add
-# else : 
-#   row_to_add = [new_, type_, ex_, date_, value_, unite_]
-#   df.loc[len(df)] = row_to_add
+with st.container():
+    st.info("Si vous souhaitez voir votre profil, merci de selectionner votre nom dans la liste déroulante ci-dessous :point_down:")
+    profile_ = st.selectbox(list_Name, "Choisir")
+    if profile_ != "Choisir" :
+        st.dataframe(df.loc[df['Nom'] == profile_],height=300)
 
