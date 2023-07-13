@@ -6,14 +6,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 ### Fonctions
-def load_data(sheets_url):
-    csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
-    return pd.read_csv(csv_url)
-
-df = load_data(st.secrets["public_gsheets_url"])
 
 def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
-    with open('database.csv', 'a+') as f:    #Append & read mode
+    with open('temp.csv', 'a+') as f:    #Append & read mode
         f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
         f.close()
 
@@ -46,7 +41,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     if submitted:
         st.write("Benchmark ajouté à votre profil !")
         form_callback(name_, type_, ex_, date_, value_, unite_, dif_)
-
+        temp.to_csv('database.csv')
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
     df = pd.read_csv('database.csv')
