@@ -10,9 +10,10 @@ import plotly.graph_objects as go
 def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
     with open('database.csv', 'a+') as f:    #Append & read mode
         f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
+        f.to_csv('database.csv', index = False)
 
 ### Variables fixes 
-df = pd.read_csv('./database.csv')
+
 list_Type = list(df['Type'].unique())
 list_Exercice = list(df['Exercice'].unique())
 list_Name = list(df['Nom'].unique())
@@ -46,7 +47,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
 
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    st.dataframe(df,height=300)
+    st.dataframe(pd.read_csv('./database.csv'),height=300)
     # profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
     # if profile_ in list_Name :
     #     st.dataframe(df.loc[df['Nom'] == profile_],height=300)
