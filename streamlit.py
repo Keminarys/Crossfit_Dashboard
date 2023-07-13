@@ -44,7 +44,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
         
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    df = pd.read_csv('database.csv')
+    df = pd.read_csv('data.csv')
     list_Type = list(df['Type'].unique())
     list_Exercice = list(df['Exercice'].unique())
     list_Name = list(df['Nom'].unique())
