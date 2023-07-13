@@ -5,6 +5,12 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
+### Fonctions
+
+def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
+    with open('database.csv', 'a+') as f:    #Append & read mode
+        f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
+
 ### Variables fixes 
 df = pd.read_csv('./database.csv')
 list_Type = ['EMOM','AMRAP','RM1']
@@ -12,6 +18,7 @@ list_Exercice = [['CHELSEA'],['CINDY'],['POWER CLEAN']]
 list_Name = list(df['Nom'].unique())
 list_Name.append("Nouveau profil")
 list_Unité = ["kg", "min", "tours"]
+list_Dif = ['RX','Scaled']
 
 ### Configuration de la page
 
@@ -20,6 +27,23 @@ st.set_page_config(layout="wide")
 st.title('Crossfit83 Le Beausset')
 st.write('Application permettant de tracer les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
 st.divider()
+
+
+# with st.form(key="my_form",clear_on_submit=True):
+    
+#     st.write("Enter Note")
+    
+#     stock_ticker_input = st.text_input('Stock', key='ticker')
+#     note_input = st.text_input('Note', key='note')
+    
+#     submitted = st.form_submit_button("Submit")
+#     if submitted:
+#         st.write("Note", note_input, "stock_ticker", stock_ticker_input)
+#         form_callback(stock_ticker_input,note_input)
+
+# st.info(" #### Show contents of the CSV file :point_down:")
+# st.dataframe(pd.read_csv("notes.csv",names=["Stock","Note"]),height=300)
+
 with st.sidebar.expander("Ajouter une ligne de benchmark."):
   name_ = st.selectbox('Choisir votre nom dans la liste déroulante ou Nouveau profil pour débuter.', list_Name)
   if name_ == "Nouveau profil" : 
@@ -35,4 +59,11 @@ with st.sidebar.expander("Ajouter une ligne de benchmark."):
   value_ = st.number_input('Merci de renseigner la valeur.')
   unite_ = st.radio('Merci de sélectionner une unité.', list_Unité)
   date_ = st.date_input('Merci de sélectionner la date du WOD', datetime.date.today())
+
+if name_ != "Nouveau profil" :
+  row_to_add = [name_, type_, ex_, date_, value_, unite_]
+  df.loc[len(df)] = row_to_add
+else : 
+  row_to_add = [new_, type_, ex_, date_, value_, unite_]
+  df.loc[len(df)] = row_to_add
 
