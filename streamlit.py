@@ -7,13 +7,17 @@ import plotly.graph_objects as go
 
 ### Fonctions
 
-def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
-    with open('temp.csv', 'a+') as f:    #Append & read mode
-        f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
-        f.close()
+def load_data(sheets_url):
+    csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
+    return pd.read_csv(csv_url)
+
+# def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
+#     with open('temp.csv', 'a+') as f:    #Append & read mode
+#         f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
+#         f.close()
 
 ### Variables fixes 
-
+df = load_data(st.secrets["public_gsheets_url"])
 list_Unité = ["kg", "min", "tours"]
 list_Dif = ['RX','Scaled']
 
@@ -40,11 +44,11 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     submitted = st.form_submit_button("Ajouter à mon profil")
     if submitted:
         st.write("Benchmark ajouté à votre profil !")
-        form_callback(name_, type_, ex_, date_, value_, unite_, dif_)
+        #form_callback(name_, type_, ex_, date_, value_, unite_, dif_)
+        df.append([name_, type_, ex_, date_, value_, unite_, dif_])
         
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    df = pd.read_csv('database.csv')
     list_Type = list(df['Type'].unique())
     list_Exercice = list(df['Exercice'].unique())
     list_Name = list(df['Nom'].unique())
