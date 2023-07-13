@@ -46,8 +46,8 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
         form_callback(name_, type_, ex_, date_, value_, unite_, dif_)
 
 with st.container():
-    st.info("Si vous souhaitez voir votre profil, merci de selectionner votre nom dans la liste déroulante ci-dessous :point_down:")
-    profile_ = st.selectbox(list_Name)
+    st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
+    profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
     if profile_ in list_Name :
         st.dataframe(df.loc[df['Nom'] == profile_],height=300)
 
