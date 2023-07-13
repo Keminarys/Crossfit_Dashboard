@@ -7,14 +7,13 @@ import plotly.graph_objects as go
 
 ### Fonctions
 
-# def load_data(sheets_url):
-#     csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
-#     return pd.read_csv(csv_url)
+def load_data(sheets_url):
+    csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
+    return pd.read_csv(csv_url)
 
-def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
-    with open('temp.csv', 'a+') as f:    #Append & read mode
-        f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
-        f.to_csv('temp.csv', index=False)
+# def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
+#     with open('temp.csv', 'a+') as f:    #Append & read mode
+#         f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
 
 ### Variables fixes 
 #df = load_data(st.secrets["public_gsheets_url"])
