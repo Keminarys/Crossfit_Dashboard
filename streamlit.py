@@ -21,14 +21,14 @@ list_Dif = ['RX','Scaled']
 
 st.set_page_config(layout="wide")
 
-st.title('# Crossfit83 Le Beausset')
-st.write('## Application permettant de tracer les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
+st.title('Crossfit83 Le Beausset')
+st.write('### Application permettant de tracer les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
 st.divider()
 
 
 with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     
-    st.write("## Ajouter un nouveau benchmark")
+    st.write("### Ajouter un nouveau benchmark")
     st.write('Pour des soucis de RGPD, merci de renseigner seulement votre les 3 premières lettre de votre prénom et la première lettre de votre nom de famille')
     name_ = st.text_input('Nom', key='Nom')
     type_ = st.text_input('Type', key='Type')
