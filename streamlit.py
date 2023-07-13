@@ -44,11 +44,11 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
 
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    st.dataframe(pd.read_csv('database.csv'),height=300)
-    # list_Type = list(df['Type'].unique())
-    # list_Exercice = list(df['Exercice'].unique())
-    # list_Name = list(df['Nom'].unique())
-    # profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
-    # if profile_ in list_Name :
-    #     st.dataframe(df.loc[df['Nom'] == profile_],height=300)
+    df = pd.read_csv('database.csv')
+    list_Type = list(df['Type'].unique())
+    list_Exercice = list(df['Exercice'].unique())
+    list_Name = list(df['Nom'].unique())
+    profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
+    if profile_ in list_Name :
+        st.dataframe(df.loc[df['Nom'] == profile_],height=300)
 
