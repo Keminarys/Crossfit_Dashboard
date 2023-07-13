@@ -6,6 +6,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 ### Fonctions
+def load_data(sheets_url):
+    csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
+    return pd.read_csv(csv_url)
+
+df = load_data(st.secrets["public_gsheets_url"])
 
 def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
     with open('database.csv', 'a+') as f:    #Append & read mode
