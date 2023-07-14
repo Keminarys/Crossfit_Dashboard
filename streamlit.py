@@ -62,8 +62,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
         send_to_database(new_row)
         
 with st.container():
-    st.info("Souhaitez-vous voir votre profil ? :point_down:")
-    choice = st.radio(['Oui','Non'])
+    choice = st.radio("Souhaitez-vous voir votre profil ?" ,['Oui','Non'])
     if choice == 'Oui' :
         profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
         if profile_ in list_Name :
