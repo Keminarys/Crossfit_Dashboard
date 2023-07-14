@@ -101,7 +101,7 @@ with st.container() :
     if choice_2 :
         graph_ex = st.selectbox('Choisissez un type d\'exercice.', list_Exercice)
         perso = perso_df(df, profile_, chex = graph_ex)
-        fig = px.line(df = perso, x="Date", y="Valeur", color="Difficulté", markers=True)
+        fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
         fig.update_layout(
         title=f'Progression sur l\'exercice {graph_ex}',
         autosize=False,
