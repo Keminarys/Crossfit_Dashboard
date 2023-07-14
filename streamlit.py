@@ -8,6 +8,7 @@ from google.oauth2 import service_account
 from gspread_pandas import Spread, Client
 
 ### Fonctions
+@st.cache_data
 def load_client(): 
     scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
@@ -15,11 +16,13 @@ def load_client():
                 st.secrets["gcp_service_account"], scopes = scope)
     client = Client(scope=scope,creds=credentials)
     return client
-
+    
+@st.cache_data
 def load_spread():
     spread = Spread("Database_CF83",client = client)
     return spread
 
+@st.cache_data
 def load_worksheet() :
     sh = client.open("Database_CF83")
     worksheet = sh.worksheet("Sheet1")
@@ -32,6 +35,7 @@ def send_to_database(row):
     spread.df_to_sheet(df = df_upt ,sheet = "Sheet1" ,index = False)
     return st.success("Benchmark ajouté à votre profil !")
 
+@st.cache_data
 def perso_df(df, profile_, chex = None):
     perso = df.loc[df['Nom'] == profile_]
     if chex == None : 
@@ -55,7 +59,9 @@ list_Dif = ['RX','Scaled']
 st.set_page_config(layout="wide")
 
 st.title('Crossfit83 Le Beausset')
-st.write('### Application permettant de tracer les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
+st.write('### Application permettant de tracer les performances dans les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
+profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
+st.write('Si vous ne vous trouvez pas, Merci d\'ajouter un benchmark pour continuer !')
 st.divider()
 
 
@@ -87,7 +93,6 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
 with st.container():
     choice = st.checkbox(':point_left: Souhaitez-vous voir votre profil ?')
     if choice :
-        profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
         perso = perso_df(df, profile_, chex = None)
         st.dataframe(perso,height=300)
 
@@ -97,7 +102,7 @@ with st.container() :
         graph_ex = st.selectbox('Choisissez un type d\'exercice.', list_Exercice)
         perso = perso_df(df, profile_, chex = graph_ex)
         fig = go.Figure()
-        fig.add_trace(go.Scatter(df = perso, x="Date", y="Valeur", color="Difficulté",
+        fig.add_trace(go.Scatter(df = perso, x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"],
                     mode='lines+markers'))
         fig.update_layout(
         title=f'Progression sur l\'exercice {graph_ex}',
