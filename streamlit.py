@@ -39,6 +39,7 @@ st.set_page_config(layout="wide")
 
 st.title('Crossfit83 Le Beausset')
 st.write('### Application permettant de tracer les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
+st.write(spread.url)
 st.divider()
 
 
