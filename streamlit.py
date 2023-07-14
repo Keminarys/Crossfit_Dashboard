@@ -53,7 +53,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
         
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    df= gc.open_by_key(private_key_id)
+    df= gc.open_by_key(st.secret(private_key_id))
     list_Type = list(df['Type'].unique())
     list_Exercice = list(df['Exercice'].unique())
     list_Name = list(df['Nom'].unique())
