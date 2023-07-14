@@ -62,16 +62,14 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
         send_to_database(new_row)
         
 with st.container():
-    choice = st.radio("Souhaitez-vous voir votre profil ?" ,['Oui','Non'])
-    if choice == 'Oui' :
+    choice = st.checkbox(':point_left: Souhaitez-vous voir votre profil ?')
+    if choice :
         profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
-        if profile_ in list_Name :
-            st.dataframe(df.loc[df['Nom'] == profile_],height=300)
+        st.dataframe(df.loc[df['Nom'] == profile_],height=300)
 
 with st.container() :
-    st.info("Souhaitez-vous visualiser votre progression à l'aide de graphique ? :point_down:")
-    choice_2 = st.radio(['Oui','Non'])
-    if choice_2 == 'Oui' :
+    choice_2 = st.checkbox(":point_left: Souhaitez-vous visualiser votre progression à l'aide de graphique ?")
+    if choice_2 :
         graph_ex = st.selectbox('Choisissez un type d\'exercice.', list_Exercice)
         #fig = px.line(df.loc[df['Nom'] == profile_], x="lifeExp", y="gdpPercap", color="country", text="year")
         
