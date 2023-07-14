@@ -82,7 +82,7 @@ with st.container():
     if choice :
         profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
         perso = perso_df(df, profile_, chex = None)
-        st.dataframe(,height=300)
+        st.dataframe(perso,height=300)
 
 with st.container() :
     choice_2 = st.checkbox(":point_left: Souhaitez-vous visualiser votre progression à l'aide de graphique ?")
