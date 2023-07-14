@@ -8,7 +8,6 @@ from google.oauth2 import service_account
 from gspread_pandas import Spread, Client
 
 ### Fonctions
-@st.cache_data
 def load_client(): 
     scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
