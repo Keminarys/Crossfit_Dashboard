@@ -8,7 +8,7 @@ from google.oauth2 import service_account
 from gspread_pandas import Spread, Client
 
 ### Fonctions
-@st.cache_data
+
 def load_client(): 
     scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
@@ -17,12 +17,12 @@ def load_client():
     client = Client(scope=scope,creds=credentials)
     return client
     
-@st.cache_data
+
 def load_spread():
     spread = Spread("Database_CF83",client = client)
     return spread
 
-@st.cache_data
+
 def load_worksheet() :
     sh = client.open("Database_CF83")
     worksheet = sh.worksheet("Sheet1")
@@ -35,7 +35,7 @@ def send_to_database(row):
     spread.df_to_sheet(df = df_upt ,sheet = "Sheet1" ,index = False)
     return st.success("Benchmark ajouté à votre profil !")
 
-@st.cache_data
+
 def perso_df(df, profile_, chex = None):
     perso = df.loc[df['Nom'] == profile_]
     if chex == None : 
