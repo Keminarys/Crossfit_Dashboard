@@ -21,7 +21,6 @@ def send_to_database(row):
 
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
-
 credentials = service_account.Credentials.from_service_account_info(
                 st.secrets["gcp_service_account"], scopes = scope)
 client = Client(scope=scope,creds=credentials)
@@ -29,7 +28,9 @@ spreadsheetname = "Database_CF83"
 spread = Spread(spreadsheetname,client = client)
 sh = client.open(spreadsheetname)
 worksheet = sh.worksheet("Sheet1")
-
+df = pd.DataFrame(worksheet.get_all_records())
+list_Exercice = list(df['Exercice'].unique())
+list_Name = list(df['Nom'].unique())
 list_Unité = ["kg", "min", "tours"]
 list_Dif = ['RX','Scaled']
 
@@ -39,7 +40,6 @@ st.set_page_config(layout="wide")
 
 st.title('Crossfit83 Le Beausset')
 st.write('### Application permettant de tracer les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
-st.dataframe(pd.DataFrame(worksheet.get_all_records()))
 st.divider()
 
 
@@ -62,12 +62,18 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
         send_to_database(new_row)
         
 with st.container():
-    st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    df = pd.DataFrame(worksheet.get_all_records())
-    list_Type = list(df['Type'].unique())
-    list_Exercice = list(df['Exercice'].unique())
-    list_Name = list(df['Nom'].unique())
-    profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
-    if profile_ in list_Name :
-        st.dataframe(df.loc[df['Nom'] == profile_],height=300)
+    st.info("Souhaitez-vous voir votre profil ? :point_down:")
+    choice = st.radio(['Oui','Non'])
+    if choice == 'Oui' :
+        profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
+        if profile_ in list_Name :
+            st.dataframe(df.loc[df['Nom'] == profile_],height=300)
+
+with st.container() :
+    st.info("Souhaitez-vous visualiser votre progression à l'aide de graphique ? :point_down:")
+    choice_2 = st.radio(['Oui','Non'])
+    if choice_2 == 'Oui' :
+        graph_ex = st.selectbox('Choisissez un type d\'exercice.', list_Exercice)
+        #fig = px.line(df.loc[df['Nom'] == profile_], x="lifeExp", y="gdpPercap", color="country", text="year")
+        
 
