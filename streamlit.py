@@ -5,33 +5,21 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 from google.oauth2 import service_account
-from shillelagh.backends.apsw.db import connect
+import gspread
 
 ### Fonctions
 
-credentials = service_account.Credentials.from_service_account_info(
-st.secrets["gcp_service_account"], 
-scopes=["https://www.googleapis.com/auth/spreadsheets",])
-connection = connect(":memory:", adapter_kwargs={
-    "gsheetsapi" : { 
-    "service_account_info" : {
-        "type" : st.secrets["gcp_service_account"]["type"],
-        "project_id" : st.secrets["gcp_service_account"]["project_id"],
-        "private_key_id" : st.secrets["gcp_service_account"]["private_key_id"],
-        "private_key" : st.secrets["gcp_service_account"]["private_key"],
-        "client_email" : st.secrets["gcp_service_account"]["client_email"],
-        "client_id" : st.secrets["gcp_service_account"]["client_id"],
-        "auth_uri" : st.secrets["gcp_service_account"]["auth_uri"],
-        "token_uri" : st.secrets["gcp_service_account"]["token_uri"],
-        "auth_provider_x509_cert_url" : st.secrets["gcp_service_account"]["auth_provider_x509_cert_url"],
-        "client_x509_cert_url" : st.secrets["gcp_service_account"]["client_x509_cert_url"],
-        }
-    },
-})
-# def form_callback(name_, type_, ex_, date_, value_, unite_, dif_):    
-#     with open('temp.csv', 'a+') as f:    #Append & read mode
-#         f.write(f"{name_}, {type_}, {ex_}, {date_}, {value_}, {unite_}, {dif_}\n")
-
+def send_to_database(row):
+    credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=["https://www.googleapis.com/auth/spreadsheets",
+           "https://www.googleapis.com/auth/drive"])
+    gc = gspread.authorize(credentials)
+    sh = gc.open("Database_CF83")
+    worksheet = sh.worksheet("Sheet1")
+    worsheet.update([sh.columns.values.tolist()] + row)
+    return st.success("Benchmark ajouté à votre profil !")
+    
 ### Variables fixes 
 #df = load_data(st.secrets["public_gsheets_url"])
 list_Unité = ["kg", "min", "tours"]
@@ -59,14 +47,12 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     dif_ = st.radio('Merci de sélectionner une difficulté.', list_Dif)
     submitted = st.form_submit_button("Ajouter à mon profil")
     if submitted:
-        st.write("Benchmark ajouté à votre profil !")
-        form_callback(name_, type_, ex_, date_, value_, unite_, dif_)
         # new_row = [name_, type_, ex_, date_, value_, unite_, dif_]
         # df.loc[len(df)] = new_row
         
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    df=pd.read_csv('temp.csv')
+    df= gc.open_by_key(private_key_id)
     list_Type = list(df['Type'].unique())
     list_Exercice = list(df['Exercice'].unique())
     list_Name = list(df['Nom'].unique())
