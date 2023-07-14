@@ -8,19 +8,6 @@ from google.oauth2 import service_account
 from gspread_pandas import Spread, Client
 
 ### Fonctions
-@st.cache_data 
-def load_env() :
-    scope = ['https://spreadsheets.google.com/feeds',
-         'https://www.googleapis.com/auth/drive']
-    credentials = service_account.Credentials.from_service_account_info(
-                st.secrets["gcp_service_account"], scopes = scope)
-    client = Client(scope=scope,creds=credentials)
-    spreadsheetname = "Database_CF83"
-    spread = Spread(spreadsheetname,client = client)
-    sh = client.open(spreadsheetname)
-    worksheet = sh.worksheet("Sheet1")
-    df = pd.DataFrame(worksheet.get_all_records())
-    
     
 def send_to_database(row):
     df = pd.DataFrame(worksheet.get_all_records())
@@ -35,9 +22,20 @@ def perso_df(df, profile_, chex = None):
         pass
     else : perso = perso.loc[perso['Exercice'] == chex]
     return perso
+    
 ### Variables fixes 
 
-load_env()
+@st.cache_data 
+scope = ['https://spreadsheets.google.com/feeds',
+         'https://www.googleapis.com/auth/drive']
+credentials = service_account.Credentials.from_service_account_info(
+                st.secrets["gcp_service_account"], scopes = scope)
+client = Client(scope=scope,creds=credentials)
+spreadsheetname = "Database_CF83"
+spread = Spread(spreadsheetname,client = client)
+sh = client.open(spreadsheetname)
+worksheet = sh.worksheet("Sheet1")
+df = pd.DataFrame(worksheet.get_all_records())
 list_Exercice = list(df['Exercice'].unique())
 list_Name = list(df['Nom'].unique())
 list_Unité = ["kg", "min", "tours"]
