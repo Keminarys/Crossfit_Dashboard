@@ -17,7 +17,8 @@ def send_to_database(row):
     gc = gspread.authorize(credentials)
     sh = gc.open("Database_CF83")
     worksheet = sh.worksheet("Sheet1")
-    worsheet.update([sh.columns.values.tolist()] + row)
+    dataframe = pd.DataFrame(worksheet.get_all_records())
+    worksheet.update([dataframe.columns.values.tolist()] + row)
     return st.success("Benchmark ajouté à votre profil !")
     
 ### Variables fixes 
@@ -47,8 +48,8 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     dif_ = st.radio('Merci de sélectionner une difficulté.', list_Dif)
     submitted = st.form_submit_button("Ajouter à mon profil")
     if submitted:
-        # new_row = [name_, type_, ex_, date_, value_, unite_, dif_]
-        # df.loc[len(df)] = new_row
+        new_row = [name_, type_, ex_, date_, value_, unite_, dif_]
+        send_to_database(new_row)
         
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
