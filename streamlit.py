@@ -22,7 +22,7 @@ def send_to_database(row):
     to_add = pd.DataFrame(row)
     data = pd.concat([df, to_add], ignore_index=True)
     col = ['Nom','Type','Exercice','Date','Valeur','Unité','Difficulté']
-    gspread_pandas.spread.df_to_sheet(data[col],sheet = "Sheet1",index = False)
+    gspread_pandas.spread.Spread.df_to_sheet(data[col],sheet = "Sheet1",index = False)
     return st.success("Benchmark ajouté à votre profil !")
 
 def display_df() : 
