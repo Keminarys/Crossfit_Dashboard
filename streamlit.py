@@ -66,8 +66,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
         new_row = {'Nom' : name_, 'Type' : type_, 
                    'Exercice' : ex_, 'Date' : date_, 
                    'Valeur' : value_, 'Unité' : unite_, 'Difficulté' : dif_}
-        opt_df = pd.DataFrame(opt)
-        send_to_database(opt_df)
+        send_to_database(new_row)
         
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
