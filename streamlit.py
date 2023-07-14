@@ -62,6 +62,7 @@ st.title('Crossfit83 Le Beausset')
 st.write('### Application permettant de tracer les performances dans les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
 profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
 st.write('Si vous ne vous trouvez pas, Merci d\'ajouter un benchmark pour continuer !')
+st.write(df.columns)
 st.divider()
 
 
