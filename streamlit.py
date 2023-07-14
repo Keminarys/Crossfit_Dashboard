@@ -6,6 +6,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from google.oauth2 import service_account
 import gspread
+import gspread_pandas
 
 ### Fonctions
 
@@ -17,8 +18,11 @@ def send_to_database(row):
     gc = gspread.authorize(credentials)
     sh = gc.open("Database_CF83")
     worksheet = sh.worksheet("Sheet1")
-    dataframe = pd.DataFrame(worksheet.get_all_records())
-    worksheet.update([dataframe.columns.values.tolist()] + row)
+    df = pd.DataFrame(worksheet.get_all_records())
+    to_add = pd.DataFrame(row)
+    data = df.append(to_add,ignore_index=True)
+    col = ['Nom','Type','Exercice','Date','Valeur','Unité','Difficulté']
+    gspread_pandas.spread.df_to_sheet(data[col],sheet = "Sheet1",index = False)
     return st.success("Benchmark ajouté à votre profil !")
 
 def display_df() : 
@@ -59,12 +63,15 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     dif_ = st.radio('Merci de sélectionner une difficulté.', list_Dif)
     submitted = st.form_submit_button("Ajouter à mon profil")
     if submitted:
-        new_row = [name_, type_, ex_, date_, value_, unite_, dif_]
-        send_to_database(new_row)
+        new_row = {'Nom' : name_, 'Type' : type_, 
+                   'Exercice' : ex_, 'Date' : date_, 
+                   'Valeur' : value_, 'Unité' : unite_, 'Difficulté' : dif_}
+        opt_df = pd.DataFrame(opt)
+        send_to_database(opt_df)
         
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    df= display_df()
+    df = display_df()
     list_Type = list(df['Type'].unique())
     list_Exercice = list(df['Exercice'].unique())
     list_Name = list(df['Nom'].unique())
