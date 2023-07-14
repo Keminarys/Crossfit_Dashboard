@@ -20,9 +20,8 @@ def send_to_database(row):
     worksheet = sh.worksheet("Sheet1")
     df = pd.DataFrame(worksheet.get_all_records())
     to_add = pd.DataFrame(row)
-    data = pd.concat([df, to_add], ignore_index=True)
-    col = ['Nom','Type','Exercice','Date','Valeur','Unité','Difficulté']
-    gspread_pandas.spread.Spread.df_to_sheet(data[col],sheet = "Sheet1",index = False)
+    df_upt = pd.concat([df, to_add], ignore_index=True)
+    gspread_pandas.spread.Spread.df_to_sheet(df_upt ,sheet = "Sheet1" ,index = False)
     return st.success("Benchmark ajouté à votre profil !")
 
 def display_df() : 
