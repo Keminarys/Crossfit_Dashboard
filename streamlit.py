@@ -20,7 +20,7 @@ def load_env() :
     sh = client.open(spreadsheetname)
     worksheet = sh.worksheet("Sheet1")
     df = pd.DataFrame(worksheet.get_all_records())
-    return df, worksheet, spread
+    
     
 def send_to_database(row):
     df = pd.DataFrame(worksheet.get_all_records())
@@ -37,7 +37,7 @@ def perso_df(df, profile_, chex = None):
     return perso
 ### Variables fixes 
 
-df, worksheet, spread = load_env()
+load_env()
 list_Exercice = list(df['Exercice'].unique())
 list_Name = list(df['Nom'].unique())
 list_Unité = ["kg", "min", "tours"]
