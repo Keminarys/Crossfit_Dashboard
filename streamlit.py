@@ -20,6 +20,17 @@ def send_to_database(row):
     dataframe = pd.DataFrame(worksheet.get_all_records())
     worksheet.update([dataframe.columns.values.tolist()] + row)
     return st.success("Benchmark ajouté à votre profil !")
+
+def display_df() : 
+    credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=["https://www.googleapis.com/auth/spreadsheets",
+           "https://www.googleapis.com/auth/drive"])
+    gc = gspread.authorize(credentials)
+    sh = gc.open("Database_CF83")
+    worksheet = sh.worksheet("Sheet1")
+    dataframe = pd.DataFrame(worksheet.get_all_records())
+    return dataframe
     
 ### Variables fixes 
 #df = load_data(st.secrets["public_gsheets_url"])
@@ -53,7 +64,7 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
         
 with st.container():
     st.info("Si vous souhaitez voir votre profil, ça se passe par ici ! :point_down:")
-    df= gc.open_by_key(st.secret(private_key_id))
+    df= display_df()
     list_Type = list(df['Type'].unique())
     list_Exercice = list(df['Exercice'].unique())
     list_Name = list(df['Nom'].unique())
