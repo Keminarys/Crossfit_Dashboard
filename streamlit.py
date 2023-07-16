@@ -36,11 +36,12 @@ def send_to_database(row):
     return st.success("Benchmark ajouté à votre profil !")
 
 
-def perso_df(df, profile_, chex = None):
+def perso_df(df, profile_, chex = None, rmwod = [None, 'WOD', 'RM']):
     perso = df.loc[df['Nom'] == profile_]
-    if chex == None : 
+    if (chex == None) and (rmwod == None): 
         pass
-    else : perso = perso.loc[perso['Exercice'] == chex]
+    elif rmwod == 'WOD': perso = perso.loc[perso['WOD'] == chex]
+    elif rmwod == 'RM': perso = perso.loc[perso['RM'] == chex]
     return perso
     
 ### Variables fixes 
@@ -49,14 +50,15 @@ client = load_client()
 spread=load_spread()
 worksheet = load_worksheet()
 df = pd.DataFrame(worksheet.get_all_records())
-list_Exercice = list(df['Exercice'].unique())
+list_WOD = list(df['WOD'].unique())
+list_RM = list(df['RM'].unique())
 list_Name = list(df['Nom'].unique())
 list_Unité = ["kg", "min", "tours"]
 list_Dif = ['RX','Scaled']
 
 ### Configuration de la page
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="centered")
 
 st.title('Crossfit83 Le Beausset')
 st.write('### Application permettant de tracer les performances dans les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
@@ -65,15 +67,16 @@ st.write('Si vous ne vous trouvez pas, Merci d\'ajouter un benchmark pour contin
 st.divider()
 
 
-with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
+with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
     
     st.write("### Ajouter un nouveau benchmark")
     st.write('Pour des soucis de RGPD, merci de renseigner seulement les 3 premières lettre de votre prénom et la première lettre de votre nom de famille (ex : DylL)')
-    name_ = st.text_input('Nom', key='Nom')
+    st.write('Si c\'est votre premier WOD ou RM remplacez le nom :point_down: par le votre')
+    name_ = st.text_input('Nom', key='Nom', value=profile_)
     st.divider()
-    type_ = st.text_input('Type (en majuscule, ex: EMOM)', key='Type')
+    type_ = st.text_input('RM (en majuscule)', key='Type')
     st.divider()
-    ex_ = st.text_input('Exercice (en majuscule, ex : CHELSEA)', key='Exercice')
+    ex_ = st.text_input('WOD (en majuscule)', key='Exercice')
     st.divider()
     date_ = st.date_input('Merci de sélectionner la date du WOD', datetime.date.today())
     st.divider()
@@ -81,33 +84,48 @@ with st.form(key="Ajouter un nouveau benchmark",clear_on_submit=True):
     st.divider()
     unite_ = st.radio('Merci de sélectionner une unité.', list_Unité)
     st.divider()
+    rep_ = st.number_input('Merci de renseigner le nombre de répétitions.')
+    st.divider()
     dif_ = st.radio('Merci de sélectionner une difficulté.', list_Dif)
     st.divider()
     submitted = st.form_submit_button("Ajouter à mon profil")
     if submitted:
-        new_row = {'Nom' : [name_], 'Type' : [type_], 
-                   'Exercice' : [ex_], 'Date' : [date_], 
-                   'Valeur' : [value_], 'Unité' : [unite_], 'Difficulté' : [dif_]}
+        new_row = {'Nom' : [name_], 'RM' : [type_], 
+                   'WOD' : [ex_], 'Date' : [date_], 
+                   'Valeur' : [value_], 'Unité' : [unite_], 
+                   'Rep': [rep_],'Difficulté' : [dif_]}
         send_to_database(new_row)
         
 with st.container():
     choice = st.checkbox(':point_left: Souhaitez-vous voir votre profil ?')
     if choice :
         perso = perso_df(df, profile_, chex = None)
-        st.dataframe(perso,height=300)
+        st.dataframe(perso)
 
 with st.container() :
     choice_2 = st.checkbox(":point_left: Souhaitez-vous visualiser votre progression à l'aide de graphique ?")
     if choice_2 :
-        graph_ex = st.selectbox('Choisissez un type d\'exercice.', list_Exercice)
-        perso = perso_df(df, profile_, chex = graph_ex)
-        fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
-        fig.update_layout(
-        title=f'Progression sur l\'exercice {graph_ex}',
-        autosize=False,
-        width=1000,
-        height=700)
-        st.plotly_chart(fig)
+        rm_wod = st.radio('Souhaitez vous voir votre progression sur un WOD ou un RM', ['WOD','RM'])
+        if rm_wod == 'WOD' : 
+            graph_ex = st.selectbox('Choisissez un type d\'exercice.', list_Exercice)
+            perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
+            fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
+            fig.update_layout(
+            title=f'Progression sur l\'exercice {graph_ex}',
+            autosize=False,
+            width=500,
+            height=300)
+            st.plotly_chart(fig,use_container_width=True)
+        if rm_wod == 'RM' : 
+            graph_ex = st.selectbox('Choisissez un type d\'exercice.', list_Exercice)
+            perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
+            fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
+            fig.update_layout(
+            title=f'Progression sur l\'exercice {graph_ex}',
+            autosize=False,
+            width=500,
+            height=300)
+            st.plotly_chart(fig,use_container_width=True)
         
         
 
