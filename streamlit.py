@@ -50,8 +50,8 @@ client = load_client()
 spread=load_spread()
 worksheet = load_worksheet()
 df = pd.DataFrame(worksheet.get_all_records())
-list_WOD = list(df['WOD'].unique())
-list_RM = list(df['RM'].unique())
+list_WOD = list(df['WOD'].upper().unique())
+list_RM = list(df['RM'].upper().unique())
 list_Name = list(df['Nom'].unique())
 list_Unité = ["kg", "min", "tours"]
 list_Dif = ['RX','Scaled']
@@ -63,7 +63,7 @@ st.set_page_config(layout="centered")
 st.title('Crossfit83 Le Beausset')
 st.write('### Application permettant de tracer les performances dans les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
 profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
-st.write('Si vous ne vous trouvez pas, Merci d\'ajouter un benchmark pour continuer !')
+st.write('Si vous ne vous trouvez pas, Merci d\'ajouter votre premier WOD ou RM pour continuer !')
 st.divider()
 
 
@@ -71,7 +71,7 @@ with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
     
     st.write("### Ajouter un nouveau RM ou WOD")
     st.write('Pour des soucis de RGPD, merci de renseigner seulement les 3 premières lettre de votre prénom et la première lettre de votre nom de famille (ex : DylL)')
-    st.write('Si c\'est votre premier WOD ou RM remplacez le nom :point_down: par le votre')
+    st.write('Si c\'est votre premier WOD ou RM remplacez le nom ci-dessous :point_down: par le votre')
     name_ = st.text_input('Nom', key='Nom', value=profile_)
     st.divider()
     type_ = st.text_input('RM (en majuscule)', key='Type')
