@@ -69,7 +69,7 @@ st.divider()
 
 with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
     
-    st.write("### Ajouter un nouveau benchmark")
+    st.write("### Ajouter un nouveau RM ou WOD")
     st.write('Pour des soucis de RGPD, merci de renseigner seulement les 3 premières lettre de votre prénom et la première lettre de votre nom de famille (ex : DylL)')
     st.write('Si c\'est votre premier WOD ou RM remplacez le nom :point_down: par le votre')
     name_ = st.text_input('Nom', key='Nom', value=profile_)
@@ -107,7 +107,7 @@ with st.container() :
     if choice_2 :
         rm_wod = st.radio('Souhaitez vous voir votre progression sur un WOD ou un RM', ['WOD','RM'])
         if rm_wod == 'WOD' : 
-            graph_ex = st.selectbox('Choisissez un type d\'exercice.', list_Exercice)
+            graph_ex = st.selectbox('Choisissez un WOD.', list_WOD)
             perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
             fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
             fig.update_layout(
@@ -117,7 +117,7 @@ with st.container() :
             height=300)
             st.plotly_chart(fig,use_container_width=True)
         if rm_wod == 'RM' : 
-            graph_ex = st.selectbox('Choisissez un type d\'exercice.', list_Exercice)
+            graph_ex = st.selectbox('Choisissez une RM.', list_RM)
             perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
             fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
             fig.update_layout(
