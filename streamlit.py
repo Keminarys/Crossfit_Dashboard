@@ -126,7 +126,7 @@ with st.container() :
                 height=300)
                 st.plotly_chart(fig,use_container_width=True)
             else : 
-                st.write('Vous n\'avez pas encore de référence sur ce WOD')
+                st.write(':no_entry_sign: Vous n\'avez pas encore de référence sur ce WOD :no_entry_sign:')
         if rm_wod == 'RM' : 
             graph_ex = st.selectbox('Choisissez une RM.', list_RM)
             perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
@@ -139,7 +139,7 @@ with st.container() :
                 height=300)
                 st.plotly_chart(fig,use_container_width=True)
             else : 
-                st.write('Vous n\'avez pas encore de référence sur ce RM')
+                st.write(':no_entry_sign: Vous n\'avez pas encore de référence sur cet RM :no_entry_sign:')
         
         
 
