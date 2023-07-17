@@ -41,9 +41,9 @@ def perso_df(df, profile_, chex = None, rmwod = [None, 'WOD', 'RM']):
     if (chex == None) and (rmwod == None): 
         pass
     elif rmwod == 'WOD': 
-        perso = perso.loc[perso['WOD'] == chex]
+        perso = perso.loc[perso['WOD'].str.upper() == chex]
     elif rmwod == 'RM': 
-        perso = perso.loc[perso['RM'] == chex]
+        perso = perso.loc[perso['RM'].str.upper() == chex]
     return perso
     
 ### Variables fixes 
