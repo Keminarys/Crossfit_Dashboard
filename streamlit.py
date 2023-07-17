@@ -76,11 +76,13 @@ st.write('Si vous ne vous trouvez pas, Merci d\'ajouter votre premier WOD ou RM 
 st.divider()
 
 with st.sidebar :
+    
     st.write('Tous les WOD dans la base de données')
     st.selectbox(list_WOD)
     st.divider()
     st.write('Tous les RM dans la base de données')
     st.selectbox(list_RM)
+    
 with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
     
     st.write("### Ajouter un nouveau RM ou WOD")
