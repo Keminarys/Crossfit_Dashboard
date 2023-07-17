@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import datetime
+import re
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
@@ -45,6 +46,9 @@ def perso_df(df, profile_, chex = None, rmwod = [None, 'WOD', 'RM']):
     elif rmwod == 'RM': 
         perso = perso.loc[perso['RM'].str.upper() == chex]
     return perso
+
+def clear_ws(string):
+    return str(np.char.replace(string, ' ', ''))
     
 ### Variables fixes 
 
@@ -52,6 +56,8 @@ client = load_client()
 spread=load_spread()
 worksheet = load_worksheet()
 df = pd.DataFrame(worksheet.get_all_records())
+df['WOD'] = df['WOD'].apply(lambda x : clear_ws(x))
+df['RM'] = df['RM'].apply(lambda x : clear_ws(x))
 list_WOD = list(df['WOD'].str.upper().unique())
 list_RM = list(df['RM'].str.upper().unique())
 list_Name = list(df['Nom'].unique())
