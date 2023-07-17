@@ -77,11 +77,9 @@ st.divider()
 
 with st.sidebar :
     
-    st.write('Tous les WOD dans la base de données')
-    st.selectbox(list_WOD)
+    st.selectbox('Tous les WOD dans la base de données', list_WOD)
     st.divider()
-    st.write('Tous les RM dans la base de données')
-    st.selectbox(list_RM)
+    st.selectbox('Tous les RM dans la base de données', list_RM)
     
 with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
     
