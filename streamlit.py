@@ -66,7 +66,8 @@ list_Dif = ['RX','Scaled']
 
 ### Configuration de la page
 
-st.set_page_config(layout="centered")
+st.set_page_config(layout="centered",
+                  initial_sidebar_state="collapsed")
 
 st.title('Crossfit83 Le Beausset')
 st.write('### Application permettant de tracer les performances dans les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
@@ -74,7 +75,7 @@ profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulan
 st.write('Si vous ne vous trouvez pas, Merci d\'ajouter votre premier WOD ou RM pour continuer !')
 st.divider()
 
-with st.sidebar("collapsed") :
+with st.sidebar :
     st.write('Tous les WOD dans la base de données')
     st.selectbox(list_WOD)
     st.divider()
