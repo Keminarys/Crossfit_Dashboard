@@ -44,12 +44,12 @@ def perso_df(df, profile_, chex = None, rmwod = [None, 'WOD', 'RM']):
         try : 
             perso = perso.loc[perso['WOD'] == chex]
         except ValueError:
-            perso = st.write('Vous n\'avez pas encore de référence sur ce WOD')
+            perso = st.error('Vous n\'avez pas encore de référence sur ce WOD')
     elif rmwod == 'RM': 
         try : 
             perso = perso.loc[perso['RM'] == chex]
         except ValueError:
-            perso = st.write('Vous n\'avez pas encore de référence sur ce RM')
+            perso = st.error('Vous n\'avez pas encore de référence sur ce RM')
     return perso
     
 ### Variables fixes 
@@ -123,25 +123,25 @@ with st.container() :
         if rm_wod == 'WOD' : 
             graph_ex = st.selectbox('Choisissez un WOD.', list_WOD)
             perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
-            fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
-            fig.update_layout(
-            title=f'Progression sur l\'exercice {graph_ex}',
-            autosize=False,
-            width=500,
-            height=300)
-            st.plotly_chart(fig,use_container_width=True)
+            if isinstance(perso, pd.DataFrame):
+                fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
+                fig.update_layout(
+                title=f'Progression sur l\'exercice {graph_ex}',
+                autosize=False,
+                width=500,
+                height=300)
+                st.plotly_chart(fig,use_container_width=True)
         if rm_wod == 'RM' : 
             graph_ex = st.selectbox('Choisissez une RM.', list_RM)
             perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
-            #if type(perso) == 
-            st.write(type(perso))
-            fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
-            fig.update_layout(
-            title=f'Progression sur l\'exercice {graph_ex}',
-            autosize=False,
-            width=500,
-            height=300)
-            st.plotly_chart(fig,use_container_width=True)
+            if isinstance(perso, pd.DataFrame):
+                fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
+                fig.update_layout(
+                title=f'Progression sur l\'exercice {graph_ex}',
+                autosize=False,
+                width=500,
+                height=300)
+                st.plotly_chart(fig,use_container_width=True)
         
         
 
