@@ -41,15 +41,9 @@ def perso_df(df, profile_, chex = None, rmwod = [None, 'WOD', 'RM']):
     if (chex == None) and (rmwod == None): 
         pass
     elif rmwod == 'WOD': 
-        try : 
-            perso = perso.loc[perso['WOD'] == chex]
-        except ValueError:
-            perso = st.error('Vous n\'avez pas encore de référence sur ce WOD')
+        perso = perso.loc[perso['WOD'] == chex]
     elif rmwod == 'RM': 
-        try : 
-            perso = perso.loc[perso['RM'] == chex]
-        except ValueError:
-            perso = st.error('Vous n\'avez pas encore de référence sur ce RM')
+        perso = perso.loc[perso['RM'] == chex]
     return perso
     
 ### Variables fixes 
@@ -123,7 +117,7 @@ with st.container() :
         if rm_wod == 'WOD' : 
             graph_ex = st.selectbox('Choisissez un WOD.', list_WOD)
             perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
-            if isinstance(perso, pd.DataFrame):
+            if len(perso) > 0:
                 fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
                 fig.update_layout(
                 title=f'Progression sur l\'exercice {graph_ex}',
@@ -131,10 +125,12 @@ with st.container() :
                 width=500,
                 height=300)
                 st.plotly_chart(fig,use_container_width=True)
+            else : 
+                st.write('Vous n\'avez pas encore de référence sur ce WOD')
         if rm_wod == 'RM' : 
             graph_ex = st.selectbox('Choisissez une RM.', list_RM)
             perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
-            if isinstance(perso, pd.DataFrame):
+            if len(perso) > 0:
                 fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
                 fig.update_layout(
                 title=f'Progression sur l\'exercice {graph_ex}',
@@ -142,6 +138,8 @@ with st.container() :
                 width=500,
                 height=300)
                 st.plotly_chart(fig,use_container_width=True)
+            else : 
+                st.write('Vous n\'avez pas encore de référence sur ce RM')
         
         
 
