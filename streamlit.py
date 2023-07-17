@@ -59,9 +59,9 @@ df = pd.DataFrame(worksheet.get_all_records())
 df['WOD'] = df['WOD'].apply(lambda x : clear_ws(x))
 df['RM'] = df['RM'].apply(lambda x : clear_ws(x))
 list_WOD = list(df['WOD'].str.upper().unique())
-list_WOD = [v for v in list_WOD if v is not None]
+list_WOD = [v for v in list_WOD if v != ""]
 list_RM = list(df['RM'].str.upper().unique())
-list_RM = [v for v in list_RM if v is not None]
+list_RM = [v for v in list_RM if v != ""]
 list_Name = list(df['Nom'].unique())
 list_Unité = ["kg", "min", "tours"]
 list_Dif = ['RX','Scaled']
@@ -75,7 +75,6 @@ st.title('Crossfit83 Le Beausset')
 st.write('### Application permettant de tracer les performances dans les différents WOD de référence et ainsi voir l\'évolution de chaque athlète.')
 profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulante', list_Name)
 st.write('Si vous ne vous trouvez pas, Merci d\'ajouter votre premier WOD ou RM pour continuer !')
-st.write(list_WOD)
 st.divider()
 
 with st.sidebar :
@@ -142,7 +141,7 @@ with st.container() :
         if rm_wod == 'RM' : 
             graph_ex = st.selectbox('Choisissez une RM.', list_RM)
             perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
-            rep_ex = st.selectbox('Choisissez un nombre de répétition.', perso.Rep.unique())
+            rep_ex = st.selectbox('Choisissez un nombre de répétition.', perso.Rep.unique().remove(""))
             perso = perso.loc[perso['Rep'] == rep_ex]
             if len(perso) > 0:
                 fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
