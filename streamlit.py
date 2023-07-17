@@ -44,12 +44,12 @@ def perso_df(df, profile_, chex = None, rmwod = [None, 'WOD', 'RM']):
         try : 
             perso = perso.loc[perso['WOD'] == chex]
         except KeyError:
-            st.write('Vous n\'avez pas encore de référence sur ce WOD')
+            perso = st.write('Vous n\'avez pas encore de référence sur ce WOD')
     elif rmwod == 'RM': 
         try : 
             perso = perso.loc[perso['RM'] == chex]
         except KeyError:
-            st.write('Vous n\'avez pas encore de référence sur ce RM')
+            perso = st.write('Vous n\'avez pas encore de référence sur ce RM')
     return perso
     
 ### Variables fixes 
