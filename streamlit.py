@@ -127,6 +127,8 @@ with st.container() :
                 fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
                 fig.update_layout(
                 title=f'Progression sur l\'exercice {graph_ex}',
+                xaxis_title="Date",
+                yaxis_title=str(perso.Unité.unique()),
                 autosize=False,
                 width=500,
                 height=300)
@@ -141,7 +143,9 @@ with st.container() :
             if len(perso) > 0:
                 fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
                 fig.update_layout(
-                title=f'Progression sur l\'exercice {graph_ex}',
+                title=f'Progression sur l\'exercice {graph_ex} pour {rep_ex} répétitions',
+                xaxis_title="Date",
+                yaxis_title=str(perso.Unité.unique()),
                 autosize=False,
                 width=500,
                 height=300)
