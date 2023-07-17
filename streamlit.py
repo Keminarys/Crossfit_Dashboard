@@ -99,6 +99,7 @@ with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
     unite_ = st.radio('Merci de sélectionner une unité.', list_Unité)
     st.divider()
     rep_ = st.number_input('Merci de renseigner le nombre de répétitions.')
+    rep_ = int(rep_)
     st.divider()
     dif_ = st.radio('Merci de sélectionner une difficulté.', list_Dif)
     st.divider()
