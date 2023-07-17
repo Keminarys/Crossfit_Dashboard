@@ -145,7 +145,7 @@ with st.container() :
                 fig.update_layout(
                 title=f'Progression sur l\'exercice {graph_ex} pour {rep_ex} répétitions',
                 xaxis_title="Date",
-                yaxis_title=str(perso.Unité.unique()),
+                yaxis_title=str(perso.Unité.unique()[0]),
                 autosize=False,
                 width=500,
                 height=300)
