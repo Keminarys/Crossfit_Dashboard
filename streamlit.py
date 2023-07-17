@@ -141,7 +141,7 @@ with st.container() :
         if rm_wod == 'RM' : 
             graph_ex = st.selectbox('Choisissez une RM.', list_RM)
             perso = perso_df(df, profile_, chex = graph_ex, rmwod = rm_wod)
-            rep_ex = st.selectbox('Choisissez un nombre de répétition.', perso.Rep.unique().remove(""))
+            rep_ex = st.selectbox('Choisissez un nombre de répétition.', perso.Rep.unique())
             perso = perso.loc[perso['Rep'] == rep_ex]
             if len(perso) > 0:
                 fig = px.line(x=perso["Date"], y=perso["Valeur"], color=perso["Difficulté"], markers=True)
