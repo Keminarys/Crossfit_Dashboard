@@ -40,8 +40,16 @@ def perso_df(df, profile_, chex = None, rmwod = [None, 'WOD', 'RM']):
     perso = df.loc[df['Nom'] == profile_]
     if (chex == None) and (rmwod == None): 
         pass
-    elif rmwod == 'WOD': perso = perso.loc[perso['WOD'] == chex]
-    elif rmwod == 'RM': perso = perso.loc[perso['RM'] == chex]
+    elif rmwod == 'WOD': 
+        try : 
+            perso = perso.loc[perso['WOD'] == chex]
+        except KeyError:
+            st.write('Vous n\'avez pas encore de référence sur ce WOD')
+    elif rmwod == 'RM': 
+        try : 
+            perso = perso.loc[perso['RM'] == chex]
+        except KeyError:
+            st.write('Vous n\'avez pas encore de référence sur ce RM')
     return perso
     
 ### Variables fixes 
@@ -66,7 +74,12 @@ profile_ = st.selectbox('Merci de selectionner votre nom dans la liste déroulan
 st.write('Si vous ne vous trouvez pas, Merci d\'ajouter votre premier WOD ou RM pour continuer !')
 st.divider()
 
-
+with st.sidebar("collapsed") :
+    st.write('Tous les WOD dans la base de données')
+    st.selectbox(list_WOD)
+    st.divider()
+    st.write('Tous les RM dans la base de données')
+    st.selectbox(list_RM)
 with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
     
     st.write("### Ajouter un nouveau RM ou WOD")
