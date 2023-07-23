@@ -117,12 +117,10 @@ with st.form(key=":point_left: Merci de bien vérifier que les informations rens
     st.write("### :point_down: Merci de bien vérifier que les informations renseigner à l\'instant soient justes")
     st.dataframe(df.tail(1))
     last_row = (int(len(df)) + 1)
-    st.write(last_row)
     st.write('Si les informations sont erronées, cliquez sur le bouton ci dessous.')
     deletion_ = st.form_submit_button("Supprimer la dernière ligne de mon profil")
-        # if err_row != "" :
-        #     err_row = int(err_row)
-        #     worksheet.delete_row(err_row)
+    if deletion_:
+        worksheet.delete_row(last_row)
 
         
 with st.container():
