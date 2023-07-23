@@ -112,6 +112,13 @@ with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
                    'Valeur' : [value_], 'Unité' : [unite_], 
                    'Rep': [rep_],'Difficulté' : [dif_]}
         send_to_database(new_row)
+
+with st.container():
+    st.write('Merci de bien vérifier que les informations renseigner à l\'instant sont justes :point_down:')
+    st.dataframe(df.tail(1))
+    err_input = st.radio('Voulez vous supprimer les informations renseignées juste avant ?', ['Non'])
+    if err_input == 'Oui' :
+        worksheet.delete_row(len(df))
         
 with st.container():
     choice = st.checkbox(':point_left: Souhaitez-vous voir votre profil ?')
