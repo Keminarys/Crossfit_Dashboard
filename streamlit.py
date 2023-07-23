@@ -112,6 +112,7 @@ with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
                    'Valeur' : [value_], 'Unité' : [unite_], 
                    'Rep': [rep_],'Difficulté' : [dif_]}
         send_to_database(new_row)
+        st.experimental_rerun()
 
 with st.form(key=":point_left: Merci de bien vérifier que les informations renseigner à l\'instant soient justes",clear_on_submit=True):
     st.write("### :point_down: Merci de bien vérifier que les informations renseigner à l\'instant soient justes")
