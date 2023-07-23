@@ -113,13 +113,10 @@ with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
                    'Rep': [rep_],'Difficulté' : [dif_]}
         send_to_database(new_row)
 
-with st.container():
-    check_input = st.checkbox(':point_left: Merci de bien vérifier que les informations renseigner à l\'instant soient justes')
-    if check_input :
-        st.dataframe(df.tail(1))
-        err_row = st.text_input('Numéro de la ligne à supprimer ?')
-        st.write(err_row)
-        st.write(len(df))
+with st.form(key=":point_left: Merci de bien vérifier que les informations renseigner à l\'instant soient justes",clear_on_submit=True):
+    st.dataframe(df.tail(1))
+    last_row = (int(len(df)) + 1)
+    st.write(last_row)
         # if err_row != "" :
         #     err_row = int(err_row)
         #     worksheet.delete_row(err_row)
