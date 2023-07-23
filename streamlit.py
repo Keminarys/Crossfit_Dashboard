@@ -119,7 +119,7 @@ with st.container():
     st.write(len(df))
     err_input = st.radio('Voulez vous supprimer les informations renseignées juste avant ?', ['Non','Oui'])
     if err_input == 'Oui' :
-        worksheet.delete_row()
+        worksheet.delete_row(len(df))
         
 with st.container():
     choice = st.checkbox(':point_left: Souhaitez-vous voir votre profil ?')
