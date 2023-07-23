@@ -86,7 +86,7 @@ with st.sidebar :
 with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
     
     st.write("### Ajouter un nouveau RM ou WOD")
-    st.write('Pour des soucis de RGPD, merci de renseigner seulement les 3 premières lettre de votre prénom et la première lettre de votre nom de famille (ex : DylL)')
+    st.write('Pour des soucis de RGPD, merci de renseigner seulement les 3 premières lettres de votre prénom et la première lettre de votre nom de famille (ex : DylL)')
     st.write('Si c\'est votre premier WOD ou RM remplacez le nom ci-dessous :point_down: par le votre')
     name_ = st.text_input('Nom', key='Nom', value=profile_)
     st.divider()
@@ -114,8 +114,8 @@ with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
         send_to_database(new_row)
         st.experimental_rerun()
 
-with st.form(key=":point_left: Merci de bien vérifier que les informations renseigner à l\'instant soient justes",clear_on_submit=True):
-    st.write("### :point_down: Merci de bien vérifier que les informations renseigner à l\'instant soient justes")
+with st.form(key=":point_left: Merci de bien vérifier que les informations renseignées à l\'instant soient justes",clear_on_submit=True):
+    st.write("### :point_down: Merci de bien vérifier que les informations renseignées à l\'instant soient justes")
     st.dataframe(df.tail(1))
     last_row = (int(len(df)) + 1)
     st.write('Si les informations sont erronées, cliquez sur le bouton ci dessous.')
