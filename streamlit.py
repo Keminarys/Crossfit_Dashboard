@@ -115,10 +115,12 @@ with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
 
 with st.container():
     check_input = st.checkbox(':point_left: Merci de bien vérifier que les informations renseigner à l\'instant soient justes')
-    st.dataframe(df.tail(1))
-    err_row = st.text_input('Numéro de la ligne à supprimer ?')
-    err_row = int(err_row)
-    worksheet.delete_row(err_row)
+    if check_input :
+        st.dataframe(df.tail(1))
+        err_row = st.text_input('Numéro de la ligne à supprimer ?')
+        if err_row != None :
+            err_row = int(err_row)
+            worksheet.delete_row(err_row)
 
         
 with st.container():
