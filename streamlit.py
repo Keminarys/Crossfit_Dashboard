@@ -120,7 +120,7 @@ with st.form(key=":point_left: Merci de bien vérifier que les informations rens
     st.write(last_row)
     answer = st.selectbox('Souhaitez vous supprimer la ligne dernièrement ajoutée ?', ['Non', 'Oui'])
     if answer == 'Oui' :
-        st.write('on est la')
+        deletion_ = st.form_submit_button("Supprimer la dernière ligne de mon profil")
         # if err_row != "" :
         #     err_row = int(err_row)
         #     worksheet.delete_row(err_row)
