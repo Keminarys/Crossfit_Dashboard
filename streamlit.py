@@ -122,6 +122,8 @@ with st.form(key=":point_left: Merci de bien vérifier que les informations rens
     deletion_ = st.form_submit_button("Supprimer la dernière ligne de mon profil")
     if deletion_:
         worksheet.delete_row(last_row)
+        st.success("Ligne erronée supprimée avec succès !")
+        st.experimental_rerun()
 
         
 with st.container():
