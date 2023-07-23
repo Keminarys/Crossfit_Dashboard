@@ -119,9 +119,10 @@ with st.container():
         st.dataframe(df.tail(1))
         err_row = st.text_input('Numéro de la ligne à supprimer ?')
         st.write(err_row)
-        if err_row != "" :
-            err_row = int(err_row)
-            worksheet.delete_row(err_row)
+        st.write(len(df))
+        # if err_row != "" :
+        #     err_row = int(err_row)
+        #     worksheet.delete_row(err_row)
 
         
 with st.container():
