@@ -114,12 +114,12 @@ with st.form(key="Ajouter un nouveau RM ou WOD",clear_on_submit=True):
         send_to_database(new_row)
 
 with st.container():
-    st.write('Merci de bien vérifier que les informations renseigner à l\'instant sont justes :point_down:')
+    check_input = st.checkbox(':point_left: Merci de bien vérifier que les informations renseigner à l\'instant soient justes')
     st.dataframe(df.tail(1))
-    st.write(len(df))
-    err_input = st.radio('Voulez vous supprimer les informations renseignées juste avant ?', ['Non','Oui'])
-    if err_input == 'Oui' :
-        worksheet.delete_row(len(df))
+    err_row = st.text_input('Numéro de la ligne à supprimer ?')
+    err_row = int(err_row)
+    worksheet.delete_row(err_row)
+
         
 with st.container():
     choice = st.checkbox(':point_left: Souhaitez-vous voir votre profil ?')
